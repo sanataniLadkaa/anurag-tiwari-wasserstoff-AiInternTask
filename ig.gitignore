@@ -1,0 +1,9 @@
+# Ignore virtual environment
+venv/
+
+# Ignore other large files
+*.dll
+*.lib
+*.pkl
+*.h5
+*.pt
