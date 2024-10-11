@@ -1,0 +1,11 @@
+fastapi
+uvicorn 
+fitz
+pymongo
+nltk
+sentence_transformers
+frontend
+tools
+numpy
+jinja2 
+python-multipart
