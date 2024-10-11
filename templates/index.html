@@ -10,9 +10,9 @@
     <div class="container">
         <h1>Upload a PDF to Process</h1>
         <p>Select a PDF file to analyze, extract keywords, and summarize its content.</p>
-        <form action="/upload/" enctype="multipart/form-data" method="post">
+        <form id="upload-form" action="/upload/" enctype="multipart/form-data" method="post"> <!-- Added id -->
             <input name="files" type="file" accept="application/pdf" multiple required>
-            <button type="submit">Upload and Process PDFs</button>
+            <button type="submit" id="upload-button">Upload and Process PDFs</button> <!-- Added id -->
         </form>
         
         <div id="loading-spinner" class="spinner" style="display: none;"></div> <!-- Loading spinner -->
