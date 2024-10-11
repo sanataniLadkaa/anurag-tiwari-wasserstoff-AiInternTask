@@ -9,6 +9,8 @@ from nltk.probability import FreqDist
 from sentence_transformers import SentenceTransformer, util
 import numpy as np
 from nltk.stem import PorterStemmer, WordNetLemmatizer
+import time  # For tracking performance
+from statistics import mean  # For calculating average times
 
 # Load BERT model for sentence embeddings
 model = SentenceTransformer('sentence-transformers/paraphrase-MiniLM-L6-v2')
@@ -27,7 +29,7 @@ collection = db['documents']
 collection.create_index("path", unique=True)
 
 # Setup logging
-logging.basicConfig(filename="error_log.txt", level=logging.ERROR)
+logging.basicConfig(filename="performance_log.txt", level=logging.INFO)
 
 # Initialize stemmer and lemmatizer
 stemmer = PorterStemmer()
@@ -69,6 +71,9 @@ def bert_summary(text, top_n_sentences=5):
         if not sentences:
             return None
 
+        # Ensure that top_n_sentences does not exceed the number of available sentences
+        top_n_sentences = min(top_n_sentences, len(sentences))
+
         embeddings = model.encode(sentences, convert_to_tensor=True)
         mean_embedding = embeddings.mean(dim=0)
         similarities = util.pytorch_cos_sim(embeddings, mean_embedding)
@@ -79,6 +84,7 @@ def bert_summary(text, top_n_sentences=5):
     except Exception as e:
         logging.error(f"Error creating BERT summary: {str(e)}")
         return None
+
 
 def summarize_text(text):
     """Summarization using BERT only."""
@@ -93,6 +99,7 @@ def summarize_text(text):
 
 def process_pdf(pdf_path):
     """Process a single PDF document: extract metadata, text, summary, and keywords."""
+    start_time = time.time()
     try:
         file_size_bytes = os.path.getsize(pdf_path)
         pdf_name = os.path.basename(pdf_path)
@@ -121,13 +128,20 @@ def process_pdf(pdf_path):
         if existing_document:
             update_result = collection.update_one({"path": normalized_path}, {"$set": document})
             if update_result.modified_count > 0:
-                print(f"Updated {pdf_name} successfully!")
+                logging.info(f"Updated {pdf_name} successfully!")
         else:
             result = collection.insert_one(document)
-            print(f"Processed {pdf_name} successfully! Document inserted with ID: {result.inserted_id}")
+            logging.info(f"Processed {pdf_name} successfully! Document inserted with ID: {result.inserted_id}")
+
+        end_time = time.time()
+        time_taken = round(end_time - start_time, 2)
+        logging.info(f"Time taken to process {pdf_name}: {time_taken} seconds")
+
+        return time_taken
 
     except Exception as e:
         logging.error(f"Error processing {pdf_path}: {str(e)}")
+        return None
 
 def process_pdfs_in_parallel(pdf_folder):
     """Process one or more PDFs concurrently, whether it's a folder or a single file."""
@@ -139,10 +153,23 @@ def process_pdfs_in_parallel(pdf_folder):
         print(f"{pdf_folder} is not a valid file or directory.")
         return
 
+    times = []
+    start_time = time.time()
+
     with ThreadPoolExecutor(max_workers=4) as executor:
-        executor.map(process_pdf, pdf_files)
+        times = list(executor.map(process_pdf, pdf_files))
+
+    end_time = time.time()
+    total_time = round(end_time - start_time, 2)
+    average_time = round(mean([t for t in times if t is not None]), 2)
+
+    logging.info(f"Processed {len(pdf_files)} PDFs in parallel.")
+    logging.info(f"Total time taken: {total_time} seconds")
+    logging.info(f"Average time per PDF: {average_time} seconds")
 
     print(f"Processed {len(pdf_files)} PDFs.")
+    print(f"Total time: {total_time} seconds")
+    print(f"Average time per document: {average_time} seconds")
 
 if __name__ == "__main__":
     pdf_folder_path = "pdf_downloads"
