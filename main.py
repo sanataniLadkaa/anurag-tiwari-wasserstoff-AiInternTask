@@ -171,6 +171,6 @@ def process_pdfs_in_parallel(pdf_folder):
     print(f"Total time: {total_time} seconds")
     print(f"Average time per document: {average_time} seconds")
 
-if __name__ == "__main__":
-    pdf_folder_path = "pdf_downloads"
-    process_pdfs_in_parallel(pdf_folder_path)
+# if __name__ == "__main__":
+#     pdf_folder_path = "pdf_downloads"
+#     process_pdfs_in_parallel(pdf_folder_path)
