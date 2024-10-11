@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Processing</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Linking CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Upload a PDF to Process</h1>
+        <p>Select a PDF file to analyze, extract keywords, and summarize its content.</p>
+        <form action="/upload/" enctype="multipart/form-data" method="post">
+            <input name="files" type="file" accept="application/pdf" multiple required>
+            <button type="submit">Upload and Process PDFs</button>
+        </form>
+        
+        <div id="loading-spinner" class="spinner" style="display: none;"></div> <!-- Loading spinner -->
+
+        <div class="footer">
+            <p>Powered by FastAPI | PDF Processing System</p>
+        </div>
+    </div>
+
+    <script src="/static/scripts.js"></script> <!-- Linking JS file -->
+</body>
+</html>

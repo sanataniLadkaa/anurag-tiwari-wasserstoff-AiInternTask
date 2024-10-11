@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFs Processed</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Linking CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>PDF Files Processed Successfully!</h1>
+        <p class="subtitle">Your files have been analyzed. Check your MongoDB for the extracted information.</p>
+
+        <div class="file-list">
+            <h2>Processed Files:</h2>
+            <ul>
+                {% for summary in summaries %}
+                    <li>
+                        <div class="file-item">
+                            <h3>{{ summary.filename }}</h3>
+                            <p>Summary: {{ summary.summary }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a class="btn" href="/">Upload more files</a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 PDF Processing System | Powered by FastAPI</p>
+    </div>
+</body>
+</html>
