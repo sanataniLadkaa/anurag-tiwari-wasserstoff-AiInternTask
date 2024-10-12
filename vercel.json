@@ -2,21 +2,21 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.py",
+      "src": "app.py",  // Your FastAPI app
       "use": "@vercel/python"
     },
     {
-      "src": "static/*",
+      "src": "static/*",  // Static files like CSS and JS
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
+      "src": "/static/(.*)",  // Route to serve static files
       "dest": "/static/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/(.*)",  // All other routes will be handled by FastAPI (app.py)
       "dest": "app.py"
     }
   ]
