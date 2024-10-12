@@ -1,0 +1,19 @@
+INFO:root:Time taken to process pdf12.pdf: 13.1 seconds
+INFO:root:Time taken to process pdf1.pdf: 14.17 seconds
+INFO:root:Time taken to process pdf11.pdf: 18.02 seconds
+INFO:root:Time taken to process pdf14.pdf: 9.5 seconds
+INFO:root:Time taken to process pdf13.pdf: 11.18 seconds
+INFO:root:Time taken to process pdf15.pdf: 12.51 seconds
+INFO:root:Time taken to process pdf16.pdf: 20.3 seconds
+INFO:root:Time taken to process pdf10.pdf: 59.1 seconds
+INFO:root:Time taken to process pdf5.pdf: 2.69 seconds
+INFO:root:Time taken to process pdf6.pdf: 12.87 seconds
+INFO:root:Time taken to process pdf7.pdf: 11.25 seconds
+INFO:root:Time taken to process pdf8.pdf: 6.81 seconds
+INFO:root:Time taken to process pdf9.pdf: 7.82 seconds
+INFO:root:Time taken to process pdf2.pdf: 86.82 seconds
+INFO:root:Time taken to process pdf4.pdf: 72.46 seconds
+INFO:root:Time taken to process pdf3.pdf: 139.61 seconds
+INFO:root:Processed 16 PDFs in parallel.
+INFO:root:Total time taken: 170.21 seconds
+INFO:root:Average time per PDF: 31.14 seconds
